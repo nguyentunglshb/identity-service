@@ -1,10 +1,16 @@
 package com.nguyentung.identity_service.controller;
 
+import com.nguyentung.identity_service.dto.ApiResponse;
 import com.nguyentung.identity_service.dto.request.UserCreationRequest;
 import com.nguyentung.identity_service.dto.request.UserUpdateRequest;
+import com.nguyentung.identity_service.dto.response.UserResponse;
 import com.nguyentung.identity_service.entity.User;
 import com.nguyentung.identity_service.service.UserService;
+import jakarta.validation.Valid;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,13 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserController {
-  @Autowired
-  private UserService userService;
+  UserService userService;
 
   @PostMapping()
-  User createUser(@RequestBody UserCreationRequest req) {
-    return userService.createRequest(req);
+  ApiResponse<User> createUser(@RequestBody @Valid UserCreationRequest req) {
+    ApiResponse<User> apiResponse = new ApiResponse<>();
+    apiResponse.setResult(userService.createUser(req));
+    return apiResponse;
   }
 
   @GetMapping()
@@ -32,12 +41,12 @@ public class UserController {
   }
 
   @GetMapping("/{userId}")
-  User getUser(@PathVariable("userId") String userId) {
+  UserResponse getUser(@PathVariable("userId") String userId) {
     return userService.getUser(userId);
   }
 
   @PutMapping("/{userId}")
-  User updateuser(@PathVariable String userId, @RequestBody UserUpdateRequest req) {
+  UserResponse updateuser(@PathVariable String userId, @RequestBody UserUpdateRequest req) {
     return userService.updateUser(userId, req);
   }
 

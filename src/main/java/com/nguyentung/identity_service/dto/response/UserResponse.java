@@ -1,4 +1,4 @@
-package com.nguyentung.identity_service.dto.request;
+package com.nguyentung.identity_service.dto.response;
 
 import java.time.LocalDate;
 import lombok.AccessLevel;
@@ -8,17 +8,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserUpdateRequest {
-  String password;
-  String firstName;
-  String lastName;
-  LocalDate dob;
-
-
+public class UserResponse {
+   String id;
+   String username;
+   String password;
+   String firstName;
+   String lastName;
+   LocalDate dob;
 }
