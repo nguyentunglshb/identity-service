@@ -4,6 +4,7 @@ import com.nguyentung.identity_service.dto.request.UserCreationRequest;
 import com.nguyentung.identity_service.dto.request.UserUpdateRequest;
 import com.nguyentung.identity_service.dto.response.UserResponse;
 import com.nguyentung.identity_service.entity.User;
+import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -16,6 +17,7 @@ public interface UserMapper {
 //  @Mapping(source = "lastName", target = "firstName")
   @Mapping(target = "lastName", ignore = true)
   UserResponse toUserResponse(User user);
+  List<UserResponse> toUserResponses(List<User> users);
   void updateUser(@MappingTarget User user, UserUpdateRequest req);
 
 }
